@@ -28,7 +28,7 @@ function download(settings, callback) {
 
 	temp.mkdir({prefix: 'jlangs'}, function (err, tmpFolder) {
 		if (err) {
-			callback(err);
+			return callback(err);
 		}
 		var zipFile = tmpFolder + 'langs.zip';
 		cmd.push([

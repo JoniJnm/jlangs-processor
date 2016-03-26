@@ -14,7 +14,7 @@ function execParts(parts, currentCallback, callback) {
 	
 	return exec(cmd, function (err, stdout, stderr) {
 		if (err) {
-			currentCallback(err);
+			return currentCallback(err);
 		}
 		if (stderr) {
 			//currentCallback(new Error(stderr));

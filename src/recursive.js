@@ -54,6 +54,7 @@ function recursive(path, _filterFunc, callback) {
 				FS.stat(file, function (err, stats) {
 					if (err) {
 						fail(def, err);
+						return;
 					}
 					else if (!filterFunc(file, stats)) {
 						def.resolve();

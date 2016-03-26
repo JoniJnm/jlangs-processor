@@ -33,12 +33,12 @@ function upload(settings, callback) {
 
 	temp.open({prefix: 'jlangs'}, function (err, info) {
 		if (err) {
-			callback(err);
+			return callback(err);
 		}
 		FS.write(info.fd, JSON.stringify(keys));
 		FS.close(info.fd, function (err) {
 			if (err) {
-				callback(err);
+				return callback(err);
 			}
 			cmd.push([
 				'-F',
@@ -48,7 +48,7 @@ function upload(settings, callback) {
 			execParts(cmd, callback, function () {
 				FS.unlink(info.path, function (err) {
 					if (err) {
-						callback(err);
+						return callback(err);
 					}
 					callback(); //ok!
 				});
