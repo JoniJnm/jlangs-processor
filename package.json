@@ -1,0 +1,26 @@
+{
+  "name": "jlangs-processor",
+  "version": "1.0.1",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+	"test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+	"type": "git",
+	"url": "git+https://github.com/JoniJnm/jlangs-processor.git"
+  },
+  "author": "JoniJnm",
+  "license": "ISC",
+  "bugs": {
+	"url": "https://github.com/JoniJnm/jlangs-processor/issues"
+  },
+  "homepage": "https://github.com/JoniJnm/jlangs-processor#readme",
+  "dependencies": {
+	"escape-string-regexp": "^1.0.5",
+	"lodash": "^4.6.1",
+	"md5": "^2.1.0",
+	"q": "^1.4.1",
+	"temp": "^0.8.3"
+  }
+}
