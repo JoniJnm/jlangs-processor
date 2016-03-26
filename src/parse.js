@@ -35,7 +35,7 @@ var parseFuncs = function (content, funcs) {
 		return keys;
 	}
 	funcs = _.map(funcs, escapeStringRegexp).join('|');
-	var regex = /[^a-zA-Z0-9-_](?:__FUNCS__)\s*\((?:'|")(.*?)(?:'|")\s*\)/;
+	var regex = /[^a-zA-Z0-9-_](?:__FUNCS__)\s*\((?:'|")(.*?)(?:(?!\\)'|")/;
 	regex = replaceRegex(regex, {
 		__FUNCS__: funcs
 	}, 'g');

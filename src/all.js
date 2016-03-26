@@ -27,7 +27,7 @@ function all(settings, callback) {
 			settings.keys = keys;
 
 			if (settings.saveKeysFile) {
-				FS.writeFile(settings.saveKeysFile, JSON.stringify(keys), function(err) {
+				FS.writeFile(settings.saveKeysFile, JSON.stringify(keys, null, 2), function(err) {
 					if (err) {
 						return callback(err);
 					}
