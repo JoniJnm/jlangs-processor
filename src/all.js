@@ -1,7 +1,7 @@
 var parse = require('./parse.js');
 var upload = require('./upload.js');
 var download = require('./download.js');
-var _ = require('_');
+var _ = require('lodash');
 var FS = require('fs');
 
 var defaultSettings = {
