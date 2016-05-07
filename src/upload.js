@@ -2,7 +2,7 @@ var _ = require('lodash');
 var FS = require('fs');
 var md5 = require('md5');
 var temp = require('temp');
-var execParts = require('./exec.js');
+var Curl = require( 'node-libcurl' ).Curl;
 
 var defaultSettings = {
 	url: null,
@@ -14,17 +14,18 @@ var defaultSettings = {
 function upload(settings, callback) {
 	var s = _.defaults(settings, defaultSettings);
 
-	var cmd = [
-		['curl', s.url + '/rest/import/hashes?id_project=' + s.id_project],
-		['-X', 'POST'],
-		['-H', 'Content-Type: multipart/form-data']
-	];
+	var curl = new Curl();
+	curl.setOpt(Curl.option.URL, s.url + '/rest/import/hashes?id_project=' + s.id_project);
 
 	if (s.Authorization) {
-		cmd.push([
-			'-H', 'Authorization: ' + s.Authorization
-		]);
+		curl.setOpt(Curl.option.HTTPHEADER, ['Authorization: ' + s.Authorization]);
 	}
+
+	curl.on('error', function ( err, curlErrCode ) {
+		console.error('Err: ', err);
+		console.error('Code: ', curlErrCode);
+		this.close();
+	});
 
 	var keys = {};
 	s.keys.forEach(function (key) {
@@ -40,12 +41,16 @@ function upload(settings, callback) {
 			if (err) {
 				return callback(err);
 			}
-			cmd.push([
-				'-F',
-				'dic=@' + info.path
+			curl.setOpt( Curl.option.HTTPPOST, [
+				{
+					name: 'dic',
+					file: info.path
+				}
 			]);
 
-			execParts(cmd, callback, function () {
+			curl.on('end', function () {
+				this.close();
+
 				FS.unlink(info.path, function (err) {
 					if (err) {
 						return callback(err);
@@ -53,6 +58,8 @@ function upload(settings, callback) {
 					callback(); //ok!
 				});
 			});
+
+			curl.perform();
 		});
 	});
 }
