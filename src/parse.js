@@ -4,6 +4,7 @@ var _ = require('lodash');
 var Q = require('q');
 var recursive = require('./recursive');
 var escapeStringRegexp = require('escape-string-regexp');
+var entityDecode = require('entity-decode');
 
 var defaultSettings = {
 	folders: ['.'],
@@ -73,7 +74,7 @@ var parseAttrs = function (content, attrs) {
 			}, 'g');
 			match = attrRegex.exec(tag);
 			if (match) {
-				keys.push(match[1]);
+				keys.push(entityDecode(match[1]));
 			}
 		}
 	}
