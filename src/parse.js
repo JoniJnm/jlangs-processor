@@ -4,7 +4,7 @@ var _ = require('lodash');
 var Q = require('q');
 var recursive = require('./recursive');
 var escapeStringRegexp = require('escape-string-regexp');
-var entityDecode = require('entity-decode');
+var entityDecode = require('./entity-decode');
 
 var defaultSettings = {
 	folders: ['.'],

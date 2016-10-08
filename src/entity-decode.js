@@ -16,7 +16,7 @@ module.exports = function html_entity_decode(string, quoteStyle) { // eslint-dis
 	//   example 2: html_entity_decode('&amp;lt;')
 	//   returns 2: '&lt;'
 
-	var getHtmlTranslationTable = require('html-translation-table')
+	var getHtmlTranslationTable = require('./html-translation-table')
 	var tmpStr = ''
 	var entity = ''
 	var symbol = ''
