@@ -54,15 +54,23 @@ var parseAttrs = function (content, attrs) {
 		return keys;
 	}
 	attrs = _.map(attrs, escapeStringRegexp).join('|');
-	var tagRegex = /<[a-z].*?\s.*?>/gi;
-	var attrRegex = /\s(__ATTRS__)\s*=("|')/;
-	attrRegex = replaceRegex(attrRegex, {
+	var tagRegex = /<([a-z][a-z0-9]*)([^>]+)>([^<]+)<\/\1>/gi;
+	var attrsRegex = /\s(__ATTRS__)\s*=("|')/;
+	attrsRegex = replaceRegex(attrsRegex, {
 		__ATTRS__: attrs
 	}, 'g');
-	var tag;
+
+	var
+		tagAttrs,
+		tagContent,
+		found,
+		attrRegex;
+
 	while ((tag = tagRegex.exec(content)) !== null) {
-		tag = tag[0];
-		var match = tag.match(attrRegex);
+		found = false;
+		tagAttrs = tag[2];
+		tagContent = tag[3].trim();
+		var match = tagAttrs.match(attrsRegex);
 		if (match) {
 			match = match[0];
 			var endChar = match[match.length - 1];
@@ -72,9 +80,23 @@ var parseAttrs = function (content, attrs) {
 				__STARTCHAR__: endChar,
 				__ENDCHAR__: endChar
 			}, 'g');
-			match = attrRegex.exec(tag);
+			match = attrRegex.exec(tagAttrs);
 			if (match) {
+				found = true;
 				keys.push(entityDecode(match[1]));
+			}
+		}
+
+		if (!found && tagContent) {
+			attrRegex = /\s__ATTRS__(\s+[^=]|$)/;
+			attrRegex = replaceRegex(attrRegex, {
+				__ATTRS__: attrs
+			}, 'g');
+
+			match = attrRegex.exec(tagAttrs);
+
+			if (match) {
+				keys.push(entityDecode(tagContent));
 			}
 		}
 	}
