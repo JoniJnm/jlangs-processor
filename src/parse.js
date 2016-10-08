@@ -61,6 +61,7 @@ var parseAttrs = function (content, attrs) {
 	}, 'g');
 
 	var
+		tag,
 		tagAttrs,
 		tagContent,
 		found,
