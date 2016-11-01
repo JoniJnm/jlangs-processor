@@ -1,6 +1,6 @@
 {
   "name": "jlangs-processor",
-  "version": "1.0.9",
+  "version": "1.0.10",
   "description": "",
   "main": "index.js",
   "scripts": {
@@ -18,9 +18,9 @@
   "homepage": "https://github.com/JoniJnm/jlangs-processor#readme",
   "dependencies": {
     "escape-string-regexp": "^1.0.5",
-    "lodash": "^4.16.4",
+    "lodash": "^4.16.6",
     "md5": "^2.2.1",
-    "node-libcurl": "^0.9.0",
+    "node-libcurl": "^1.0.0",
     "q": "^1.4.1",
     "temp": "^0.8.3",
     "zip-local": "^0.3.4"
